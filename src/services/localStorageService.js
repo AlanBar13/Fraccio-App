@@ -34,8 +34,16 @@ export const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@storage_Key')
       return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch(e) {
+    } catch(error) {
         console.log('[AsyncStorage] ', error.message)
     }
-  }
+}
+
+export const deleteKey = async (key) => {
+    try {
+        await AsyncStorage.removeItem(key)
+    } catch (error) {
+        console.log('[AsyncStorage] ', error.message)
+    }
+}
   
