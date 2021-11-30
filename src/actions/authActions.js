@@ -1,5 +1,6 @@
-import { RESTORE_TOKEN, LOGIN, LOGOUT, LOADING, LOGIN_FAIL} from '../constants'
+import { RESTORE_TOKEN, LOGIN, LOGOUT, LOADING, LOGIN_FAIL, RESTORE_TOKEN_FAIL} from '../constants'
 import { saveStringtoLSS, getStringValueLSS, deleteKey } from '../services/localStorageService'
+import api from '../services/fraccioApiService'
 
 export const bootstrapAsync = () => async (dispatch) => {
     let userToken
@@ -10,7 +11,7 @@ export const bootstrapAsync = () => async (dispatch) => {
         console.log('Restore token', userToken)
         if(userToken === null){
             console.log("[Auth] Token is null")
-            dispatch({type: LOGIN_FAIL})
+            dispatch({type: RESTORE_TOKEN_FAIL})
             return
         }
         dispatch({type: RESTORE_TOKEN, token: userToken})
@@ -24,14 +25,18 @@ export const signIn = (user, pass) => async (dispatch) => {
 
     try {
         //make call to sign in
-        console.log(user, pass)
-        await saveStringtoLSS('userToken', 'dummy-auth-token')
+        const res = await api.post('/api/users/login', {
+            email: user,
+            password: pass
+        })
+       const {token} = res.data
+       console.log(token)
+        await saveStringtoLSS('userToken', token)
+        dispatch({type: LOGIN, token: token})
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
         dispatch({type: LOGIN_FAIL})
     }
-
-    dispatch({type: LOGIN, token: 'dummy-auth-token'})
 }
 
 export const signOut = () => async (dispatch) => {

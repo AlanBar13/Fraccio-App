@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Box, FormControl, Input, Stack, WarningOutlineIcon, Button, Center, Heading, useToast} from 'native-base'
+import {Box, FormControl, Input, Stack, WarningOutlineIcon, Button, Center, Heading} from 'native-base'
 import {useDispatch, useSelector} from 'react-redux'
 
 import { signIn } from '../actions/authActions'
@@ -11,16 +11,8 @@ const Login = () => {
     const [user, setUser] = useState("")
     const [pass, setPass] = useState("")
 
-    const toast = useToast()
-
-    const login = () => {
-        dispatch(signIn(user, pass))
-        if(error){
-            toast.show({
-                title: "Usuario invalido o contraseña incorrecta",
-                status: "warning"
-            })
-        }
+    const login = async () => {
+        await dispatch(signIn(user, pass))
     }
 
     return (
@@ -34,13 +26,16 @@ const Login = () => {
                 <FormControl>
                     <Stack mx="4" paddingTop="2">
                         <FormControl.Label>Usuario:</FormControl.Label>
-                        <Input value={user} onChangeText={setUser} />
+                        <Input keyboardType="email-address" autoCapitalize="none" value={user} onChangeText={setUser} />
                     </Stack>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={error}>
                     <Stack mx="4" paddingTop="2">
                         <FormControl.Label>Contraseña:</FormControl.Label>
                         <Input type="password" value={pass} onChangeText={setPass} />
+                        <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+                            Usuario o contraseña invalidos
+                        </FormControl.ErrorMessage>
                     </Stack>
                 </FormControl>
                 <Stack mx="4" paddingTop="2">
