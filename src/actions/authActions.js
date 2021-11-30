@@ -28,6 +28,7 @@ export const signIn = (user, pass) => async (dispatch) => {
         await saveStringtoLSS('userToken', 'dummy-auth-token')
     } catch (error) {
         console.log(error)
+        dispatch({type: LOGIN_FAIL})
     }
 
     dispatch({type: LOGIN, token: 'dummy-auth-token'})
