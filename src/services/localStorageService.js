@@ -30,9 +30,9 @@ export const savetoLSS = async (key, value) => {
     }
 }
 
-export const getData = async () => {
+export const getDataLSS = async (key) => {
     try {
-      const jsonValue = await AsyncStorage.getItem('@storage_Key')
+      const jsonValue = await AsyncStorage.getItem(key)
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(error) {
         console.log('[AsyncStorage] ', error.message)

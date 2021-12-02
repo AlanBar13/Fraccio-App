@@ -4,7 +4,7 @@ export const authReducer = (state = { userToken: null, isLoading: false, isSigne
         case LOADING:
             return {...state, isLoading: true }
         case RESTORE_TOKEN:
-            return {...state, userToken: action.token, isLoading: false, isSigned: true, error: false}
+            return {...state, userToken: action.payload.token, isLoading: false, isSigned: true, error: false, user: action.payload.user}
         case LOGIN:
             return {...state, isSigned: true, userToken: action.payload.token, error: false, user: action.payload}
         case LOGIN_FAIL:
