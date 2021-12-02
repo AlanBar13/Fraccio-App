@@ -56,10 +56,10 @@ const Menu = () => {
                   headerShown: false
                 }} 
                 component={Dashboard} />
-                <Drawer.Screen name="Announcements" component={Announcements} />
-                <Drawer.Screen name="Visits" component={Visits} />
-                <Drawer.Screen name="Payments" component={Payments} />
-                <Drawer.Screen name="User" component={User} />
+                <Drawer.Screen name="Anuncios" component={Announcements} />
+                <Drawer.Screen name="Visitas" component={Visits} />
+                <Drawer.Screen name="Pago" component={Payments} />
+                <Drawer.Screen name="Ajustes" component={User} />
               </>
             ): (
               <Drawer.Screen 
