@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer'
+import { SunIcon, ChevronLeftIcon } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native'
 import {useSelector, useDispatch} from 'react-redux'
 
-import { bootstrapAsync } from '../actions/authActions'
+import { bootstrapAsync, signOut } from '../actions/authActions'
 
 import Dashboard from '../screens/Dashboard';
 import Announcements from '../screens/Announcements';
@@ -22,12 +23,26 @@ const Menu = () => {
     dispatch(bootstrapAsync())
   }, [])
 
+  const CustomDrawer = (props) => {
+    return (
+      <DrawerContentScrollView {...props}>
+        <DrawerItem label={`${authinfo.user.name}`} icon={({color}) => <SunIcon size="4" color={color} /> } />
+        <DrawerItemList {...props} />
+        <DrawerItem label="LogOut" icon={({color}) => <ChevronLeftIcon size="4" color={color} /> } onPress={() => {
+          dispatch(signOut())
+          props.navigation.closeDrawer()
+          }} />
+      </DrawerContentScrollView>
+    );
+  }
+
   const isSigned = authinfo.isSigned
   return (
       <NavigationContainer>
         <Drawer.Navigator
           drawerType="back"
           initialRoute="Home"
+          drawerContent={(props) => <CustomDrawer {...props} />}
           screenOptions={{
             activeTintColor: '#4b0000',
             itemStyle: { marginVertical: 10 }

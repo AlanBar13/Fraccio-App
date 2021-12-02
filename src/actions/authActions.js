@@ -30,9 +30,8 @@ export const signIn = (user, pass) => async (dispatch) => {
             password: pass
         })
        const {token} = res.data
-       console.log(token)
         await saveStringtoLSS('userToken', token)
-        dispatch({type: LOGIN, token: token})
+        dispatch({type: LOGIN, payload: res.data})
     } catch (error) {
         console.log(error.message)
         dispatch({type: LOGIN_FAIL})
