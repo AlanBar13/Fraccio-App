@@ -1,6 +1,8 @@
 import React from 'react'
 import { Box, HStack, VStack, Text, Spacer, WarningOutlineIcon, QuestionOutlineIcon, MinusIcon } from 'native-base'
 
+import {formatD} from '../services/dateService'
+
 const AnnouncesListItem = ({item}) => {
     return (
         <Box
@@ -23,7 +25,7 @@ const AnnouncesListItem = ({item}) => {
               color="coolGray.800"
               bold
             >
-              {item.fullName}
+              {item.title}
             </Text>
             <Text
               color="coolGray.600"
@@ -31,7 +33,7 @@ const AnnouncesListItem = ({item}) => {
                 color: "warmGray.200",
               }}
             >
-              {item.recentText}
+              {item.description}
             </Text>
           </VStack>
           <Spacer />
@@ -43,7 +45,7 @@ const AnnouncesListItem = ({item}) => {
             color="coolGray.800"
             alignSelf="flex-start"
           >
-            {item.timeStamp}
+            {formatD(item.postedAt)}
           </Text>
         </HStack>
       </Box>

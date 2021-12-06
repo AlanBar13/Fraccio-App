@@ -10,7 +10,6 @@ export const bootstrapAsync = () => async (dispatch) => {
 
     try {
         userToken = await getStringValueLSS(tokenKey)
-        console.log('Restore token', userToken)
         if(userToken === null){
             console.log("[Auth] Token is null")
             dispatch({type: RESTORE_TOKEN_FAIL})
